@@ -7,6 +7,10 @@ def manage_transactions():
         return jsonify(transactions)
     elif request.method == 'POST':
         data = request.json
+        data = request.json
+        if not all(k in data for k in ('action', 'user_id', 'book_id')):
+            return jsonify({'status':'error', 'message':'Missing required fields'}), 400
+
         action = data['action'] # 'borrow' or 'return'
         user_id = data['user_id']
         book_id = data['book_id']
@@ -58,6 +62,6 @@ def user_borrowed_books():
                 borrowed.append(book)
     return jsonify(borrowed)
 
-        return jsonify({'status': 'success'}), 201
+    return jsonify({'status': 'success'}), 201
 
         
